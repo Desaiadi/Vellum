@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Loader2, MessageCircle, Send, Sparkles, X } from "lucide-react";
 import { sendChat } from "../api";
 
 const SUGGESTIONS = [
@@ -48,9 +49,12 @@ export default function ChatWidget() {
       {open && (
         <div className="mb-3 flex h-[28rem] w-80 flex-col overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/10 sm:w-96">
           <div className="flex items-center justify-between bg-navy px-4 py-3">
-            <span className="font-serif-head font-bold text-white">Ask about Vellum</span>
+            <span className="flex items-center gap-2 font-serif-head font-bold text-white">
+              <Sparkles size={16} className="text-amber" />
+              Ask about Vellum
+            </span>
             <button onClick={() => setOpen(false)} className="text-white/70 hover:text-white">
-              ✕
+              <X size={18} />
             </button>
           </div>
           <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto p-4">
@@ -66,7 +70,11 @@ export default function ChatWidget() {
                 {m.content}
               </div>
             ))}
-            {sending && <div className="text-xs text-gray-400">Thinking…</div>}
+            {sending && (
+              <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                <Loader2 size={12} className="animate-spin" /> Thinking…
+              </div>
+            )}
           </div>
           {messages.length === 1 && (
             <div className="flex flex-wrap gap-1.5 px-4 pb-2">
@@ -97,19 +105,19 @@ export default function ChatWidget() {
             <button
               type="submit"
               disabled={sending}
-              className="rounded-full bg-navy px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
+              className="flex items-center justify-center rounded-full bg-navy px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
             >
-              Send
+              <Send size={15} />
             </button>
           </form>
         </div>
       )}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-amber text-2xl shadow-xl transition hover:scale-105"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-amber text-navy shadow-xl transition hover:scale-105"
         aria-label="Open chat"
       >
-        💬
+        <MessageCircle size={24} />
       </button>
     </div>
   );

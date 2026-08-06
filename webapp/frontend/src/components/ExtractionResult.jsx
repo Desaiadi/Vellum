@@ -1,12 +1,24 @@
 import { useState } from "react";
+import {
+  AlertTriangle,
+  Calendar,
+  ClipboardList,
+  Loader2,
+  Sparkles,
+  Stethoscope,
+  User,
+} from "lucide-react";
 import ConfidenceBadge, { ReviewFlag } from "./ConfidenceBadge";
 import { explainSnippet } from "../api";
 
-function Field({ label, value, confidence }) {
+function Field({ icon: Icon, label, value, confidence }) {
   return (
     <div>
-      <div className="text-[11px] font-bold uppercase tracking-wide text-gray-400">{label}</div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide text-gray-400">
+        {Icon && <Icon size={11} />}
+        {label}
+      </div>
+      <div className="mt-0.5 flex items-center gap-2">
         <span className="font-semibold text-navy">{value}</span>
         <ConfidenceBadge level={confidence} />
       </div>
@@ -44,9 +56,10 @@ function CodeRow({ item, codeLabel }) {
           <button
             onClick={explain}
             disabled={loading}
-            className="text-xs font-medium text-navy underline decoration-dotted hover:text-amber-dark disabled:opacity-50"
+            className="flex items-center gap-1 rounded-full border border-navy/20 px-2 py-0.5 text-xs font-medium text-navy transition hover:border-navy hover:bg-navy/5 disabled:opacity-50"
           >
-            {loading ? "…" : "explain"}
+            {loading ? <Loader2 size={11} className="animate-spin" /> : <Sparkles size={11} />}
+            explain
           </button>
         </div>
       </div>
@@ -82,19 +95,23 @@ export default function ExtractionResult({ result, showDeid }) {
       </div>
 
       {record.needs_review && (
-        <div className="mb-4 rounded-xl bg-amber/15 px-3 py-2 text-sm font-semibold text-amber-dark">
-          🚩 One or more fields flagged for human review.
+        <div className="mb-4 flex items-center gap-2 rounded-xl bg-amber/15 px-3 py-2 text-sm font-semibold text-amber-dark">
+          <AlertTriangle size={15} />
+          One or more fields flagged for human review.
         </div>
       )}
 
       <div className="mb-5 grid grid-cols-1 gap-4 rounded-xl bg-gray-50 p-4 sm:grid-cols-3">
-        <Field label="Patient" value={`${record.patient.name} · DOB ${record.patient.dob}`} confidence={record.patient.confidence} />
-        <Field label="Provider" value={`${record.provider.name} (${record.provider.identifier})`} confidence={record.provider.confidence} />
-        <Field label="Date of Service" value={record.dates.date_of_service} confidence={record.dates.confidence} />
+        <Field icon={User} label="Patient" value={`${record.patient.name} · DOB ${record.patient.dob}`} confidence={record.patient.confidence} />
+        <Field icon={Stethoscope} label="Provider" value={`${record.provider.name} (${record.provider.identifier})`} confidence={record.provider.confidence} />
+        <Field icon={Calendar} label="Date of Service" value={record.dates.date_of_service} confidence={record.dates.confidence} />
       </div>
 
       <div className="mb-4">
-        <h4 className="mb-1 text-xs font-bold uppercase tracking-wide text-navy">Diagnoses (ICD-10)</h4>
+        <h4 className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-navy">
+          <Stethoscope size={13} />
+          Diagnoses (ICD-10)
+        </h4>
         {record.diagnoses.length === 0 ? (
           <p className="text-sm text-gray-400">None found.</p>
         ) : (
@@ -103,7 +120,10 @@ export default function ExtractionResult({ result, showDeid }) {
       </div>
 
       <div>
-        <h4 className="mb-1 text-xs font-bold uppercase tracking-wide text-navy">Procedures (CPT)</h4>
+        <h4 className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-navy">
+          <ClipboardList size={13} />
+          Procedures (CPT)
+        </h4>
         {record.procedures.length === 0 ? (
           <p className="text-sm text-gray-400">None found.</p>
         ) : (

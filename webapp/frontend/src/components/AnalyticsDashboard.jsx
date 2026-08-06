@@ -1,3 +1,4 @@
+import { BarChart3 } from "lucide-react";
 import { overallConfidence } from "./ReviewQueue";
 
 function StatCard({ value, label, accent }) {
@@ -37,7 +38,10 @@ export default function AnalyticsDashboard({ results }) {
 
   return (
     <div className="rounded-2xl bg-navy p-5 text-white shadow-sm">
-      <h3 className="mb-4 font-serif-head text-lg font-bold">Batch analytics</h3>
+      <h3 className="mb-4 flex items-center gap-2 font-serif-head text-lg font-bold">
+        <BarChart3 size={18} className="text-amber" />
+        Batch analytics
+      </h3>
       <div className="mb-5 grid grid-cols-3 gap-3">
         <StatCard value={total} label="Processed" />
         <StatCard value={results.length - total} label="Errors" accent="text-bad" />

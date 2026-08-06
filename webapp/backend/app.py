@@ -15,6 +15,7 @@ import chatbot
 import config
 import deid
 import report_summary
+from fileio import open_document_image
 from pipelines import classic_pipeline, multimodal_pipeline
 
 app = Flask(__name__)
@@ -47,7 +48,7 @@ def get_sample(name):
 def _load_upload_image():
     if "file" not in request.files:
         raise ValueError("No file uploaded (expected multipart field 'file').")
-    return Image.open(request.files["file"]).convert("RGB")
+    return open_document_image(request.files["file"])
 
 
 def _load_sample_image(sample_name: str):
@@ -67,7 +68,7 @@ def _resolve_image():
 def extract():
     try:
         image = _resolve_image()
-    except (ValueError, FileNotFoundError) as exc:
+    except Exception as exc:
         return jsonify({"error": str(exc)}), 400
 
     backend = request.form.get("backend", "claude")
@@ -93,7 +94,7 @@ def extract_batch():
     results = []
     for f in files:
         try:
-            image = Image.open(f).convert("RGB")
+            image = open_document_image(f)
             result = fn(image, backend)
             payload = _result_to_json(result, include_deid)
         except Exception as exc:  # keep batch going even if one file is bad

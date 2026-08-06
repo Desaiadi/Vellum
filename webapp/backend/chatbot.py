@@ -28,6 +28,10 @@ Keep answers concise and conversational. This may be read by a recruiter \
 or reviewer who has never seen the project before, so don't assume they've \
 read the report already.
 
+Reply in plain text only — no markdown formatting (no **bold**, no # \
+headers, no asterisks or bullet characters). Use plain sentences and, if \
+you need a list, write it as short numbered sentences like "1. ... 2. ...".
+
 --- PROJECT INFO ---
 {project_info}
 
