@@ -21,25 +21,36 @@ approaches to clinical document understanding differ — and why that
 matters for a payment-integrity company like Cotiviti, where faster and
 more accurate chart intake directly affects claims auditing.
 
+There are two runnable versions of the demo:
+
+- **`webapp/`** — the flagship version: Flask + React, batch upload with a
+  review queue and analytics dashboard, a de-identified view, a
+  plain-English report summary, and a grounded chatbot that can answer
+  questions about the project, the report, or the builder's background.
+- **`poc/`** — the original, simpler Streamlit version, kept as a
+  lightweight fallback.
+
 ## Repository structure
 
 ```
 Vellum/
 ├── report/     # 2-page written report + APA bibliography (Word)
-├── poc/        # the hackathon proof-of-concept (Streamlit app)
+├── webapp/     # flagship demo: Flask API + React frontend
+├── poc/        # original hackathon proof-of-concept (Streamlit app)
 ├── slides/     # PowerPoint overview of the report + POC
 ├── video/      # demo video + recording script
 └── resume/     # current resume
 ```
 
-## Running the POC
+## Running the demo
 
-See [poc/README.md](poc/README.md) for setup and run instructions.
+- Flagship (Flask + React): see [webapp/README.md](webapp/README.md).
+- Original lightweight version (Streamlit): see [poc/README.md](poc/README.md).
 
 ## Deliverables checklist
 
 - [x] Written report (`report/Vellum_Report.docx`)
-- [x] Hackathon proof-of-concept (`poc/`)
+- [x] Hackathon proof-of-concept (`webapp/`, with `poc/` as the original lightweight fallback)
 - [x] Slide presentation (`slides/Vellum_Presentation.pptx`)
 - [ ] Video recording — script ready at `video/script.md`, `.mp4` pending
 - [x] Resume (`resume/Aditya_Desai_Resume.pdf`)

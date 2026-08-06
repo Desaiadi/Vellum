@@ -22,5 +22,11 @@ venv/
 # Streamlit
 .streamlit/
 
+# Node / React
+node_modules/
+dist/
+dist-ssr/
+*.local
+
 # Claude Code tooling (local dev only, not part of the deliverable)
 .claude/
