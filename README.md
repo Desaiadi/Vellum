@@ -38,8 +38,8 @@ See [poc/README.md](poc/README.md) for setup and run instructions.
 
 ## Deliverables checklist
 
-- [x] Written report (`report/`)
+- [x] Written report (`report/Vellum_Report.docx`)
 - [x] Hackathon proof-of-concept (`poc/`)
-- [x] Slide presentation (`slides/`)
-- [x] Video recording (`video/`)
-- [x] Resume (`resume/`)
+- [x] Slide presentation (`slides/Vellum_Presentation.pptx`)
+- [ ] Video recording — script ready at `video/script.md`, `.mp4` pending
+- [x] Resume (`resume/Aditya_Desai_Resume.pdf`)
