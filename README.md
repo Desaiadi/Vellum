@@ -2,13 +2,24 @@
 
 **Cotiviti Intern Assessment — Clinical Natural Language Technology for Health Care**
 
-Vellum is a proof-of-concept clinical chart coding assistant. It compares three ways of turning a scanned clinical note into structured, billable diagnosis/procedure codes:
+Vellum is a proof-of-concept clinical document intake assistant. A single
+multimodal model reads a scanned clinical billing document (superbill /
+discharge summary) and extracts a full structured record — patient,
+provider, dates, diagnoses (ICD-10), procedures (CPT) — with per-field
+confidence scores and a `needs_review` flag, in one pass. This replaces
+the conventional **OCR → NER → code-normalization** pipeline, which is
+also included as an optional side-by-side comparison so you can see
+exactly what the single-model approach replaces.
 
-1. **Classic pipeline** — OCR (Tesseract) extracts text, then a large language model reads the text and suggests ICD-10/CPT codes with evidence citations. This mirrors the "present" of clinical NLP: a document-processing pipeline bolted onto a general-purpose LLM.
-2. **Multimodal (LMM) pipeline** — a vision-capable LLM reads the note image directly, no OCR step at all. This is the "future" approach the report discusses: end-to-end multimodal understanding.
-3. **Local/offline pipeline** — the same comparison run against an on-device model via [Ollama](https://ollama.com), so inference has zero marginal API cost.
+Everything runs against either a cloud backend (Claude API) or a fully
+local/offline backend ([Ollama](https://ollama.com)), so the demo can also
+show zero-marginal-cost, on-device inference — and the real reliability
+gap between them.
 
-The goal is to show, hands-on, how OCR + NLP + Computer Vision + LLM/LMM approaches to clinical document understanding differ — and why that matters for a payment-integrity company like Cotiviti, where faster and more accurate chart coding directly affects claims auditing.
+The goal is to show, hands-on, how OCR + NLP + Computer Vision + LLM/LMM
+approaches to clinical document understanding differ — and why that
+matters for a payment-integrity company like Cotiviti, where faster and
+more accurate chart intake directly affects claims auditing.
 
 ## Repository structure
 
