@@ -13,9 +13,11 @@ from PIL import Image
 
 import chatbot
 import config
+import content_tools
 import deid
+import record_explainer
 import report_summary
-from fileio import open_document_image
+from fileio import extract_text, open_document_image
 from pipelines import classic_pipeline, multimodal_pipeline
 
 app = Flask(__name__)
@@ -120,6 +122,99 @@ def report_explain_route():
         return jsonify({"error": "No 'text' provided to explain."}), 400
     try:
         return jsonify({"explanation": report_summary.explain(text)})
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 500
+
+
+def _text_from_request(text_field="text", file_field="file"):
+    """Accept either pasted text or an uploaded document."""
+    if file_field in request.files and request.files[file_field].filename:
+        return extract_text(request.files[file_field])
+    pasted = (request.form.get(text_field) or "").strip()
+    if not pasted and request.is_json:
+        pasted = ((request.get_json(silent=True) or {}).get(text_field) or "").strip()
+    if not pasted:
+        raise ValueError("Provide a document to upload, or paste the text in.")
+    return pasted
+
+
+# --------------------------------------------------------------------------
+# Content management — policies, guidelines, contracts
+# --------------------------------------------------------------------------
+
+
+@app.post("/api/content/summarize")
+def content_summarize():
+    try:
+        text = _text_from_request()
+        doc_type = request.form.get("doc_type", "other")
+        return jsonify(content_tools.summarize(text, doc_type))
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 500
+
+
+@app.post("/api/content/compare")
+def content_compare():
+    try:
+        if "file_a" in request.files and request.files["file_a"].filename:
+            text_a = extract_text(request.files["file_a"])
+        else:
+            text_a = (request.form.get("text_a") or "").strip()
+        if "file_b" in request.files and request.files["file_b"].filename:
+            text_b = extract_text(request.files["file_b"])
+        else:
+            text_b = (request.form.get("text_b") or "").strip()
+        if not text_a or not text_b:
+            return jsonify({"error": "Provide both versions to compare."}), 400
+        return jsonify(content_tools.compare(text_a, text_b))
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 500
+
+
+@app.post("/api/content/to-rules")
+def content_to_rules():
+    try:
+        text = _text_from_request()
+        target = request.form.get("target", "rules_json")
+        return jsonify(content_tools.to_rules(text, target))
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 500
+
+
+# --------------------------------------------------------------------------
+# Patient record explainer
+# --------------------------------------------------------------------------
+
+
+@app.post("/api/record/explain")
+def record_explain():
+    try:
+        text = _text_from_request()
+        result = record_explainer.explain(text)
+        result["source_text"] = text
+        return jsonify(result)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 500
+
+
+@app.post("/api/record/consult")
+def record_consult():
+    data = request.get_json(force=True, silent=True) or {}
+    question = (data.get("question") or "").strip()
+    record_text = (data.get("record_text") or "").strip()
+    history = data.get("history", [])
+    if not question or not record_text:
+        return jsonify({"error": "Both 'question' and 'record_text' are required."}), 400
+    try:
+        return jsonify({"reply": record_explainer.consult(question, record_text, history)})
     except Exception as exc:
         return jsonify({"error": str(exc)}), 500
 

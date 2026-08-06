@@ -24,6 +24,33 @@ The app also includes:
 - A structured-output de-identification toggle for downstream/analytics use of the extracted record.
 - This chatbot, and a plain-English summary of the accompanying written report.
 
+## Content management (the "Policy" tab)
+
+A second workspace for healthcare policy documents — billing and coding
+policies, clinical practice guidelines, and payer–provider contracts. Three
+tools:
+
+1. **Summarize** — a plain-English overview plus the key points, every concrete obligation the document imposes (with a supporting quote), any billing codes it references, and anything too ambiguous to act on.
+2. **Compare versions** — a semantic diff between two versions of the same policy: what was added, removed, modified, or clarified; the practical impact of each change; and how material it is. It ignores pure formatting and renumbering.
+3. **Convert to rules** — turns written policy into machine-readable logic. Output can be declarative JSON rules, executable Python, SQL against a claims table, or a list of model features. Each rule carries its condition, action, supporting quote, and a confidence level, plus the data fields needed to run it and explicit caveats wherever the policy is too vague to encode faithfully.
+
+## Patient record explainer (the "My Record" tab)
+
+A patient-facing tool. Upload a lab report, visit summary, or medical record
+and it explains the document in plain language: what kind of document it is,
+what it says overall, each result explained individually (what the test
+measures and what that particular value generally indicates), general
+possibilities that could explain the pattern, questions worth bringing to an
+appointment, and how time-sensitive follow-up appears to be. There's also a
+follow-up chat grounded in the uploaded document.
+
+This is deliberately framed as an **educational explainer, not a diagnosis**.
+It does not tell anyone what they have, and never advises starting, stopping,
+or changing a medication or treatment. Possibilities are described as things
+a clinician would consider, not conclusions about the person. If anything in
+the document looks potentially serious or time-sensitive, it says so plainly
+and raises the urgency level rather than offering false reassurance.
+
 ## What it does NOT do
 
 - It is **not** a certified medical coding tool. ICD-10/CPT suggestions are illustrative for a demo, not a billing-ready determination — a human coder should review every line.

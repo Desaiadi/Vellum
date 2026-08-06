@@ -3,27 +3,83 @@
 @theme {
   --color-navy: #1e2761;
   --color-navy-dark: #141b49;
+  --color-navy-deep: #0d1232;
   --color-ice: #cadcfc;
   --color-amber: #f2b134;
   --color-amber-dark: #b8790a;
   --color-good: #2e9e5b;
   --color-bad: #c0392b;
-  --font-serif-head: "Cambria", "Georgia", serif;
+  --color-paper: #f7f8fc;
+  --font-display: "Cambria", "Georgia", serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;
-  background-color: #f7f8fc;
+  background-color: var(--color-paper);
   color: #1a1f3c;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 ::-webkit-scrollbar-thumb {
   background: #c7cde6;
   border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aab2d4;
+}
+
+/* Subtle grid texture for dark hero sections */
+.mesh {
+  background-image:
+    radial-gradient(at 18% 22%, rgba(80, 100, 220, 0.35) 0px, transparent 55%),
+    radial-gradient(at 82% 8%, rgba(242, 177, 52, 0.14) 0px, transparent 50%),
+    radial-gradient(at 72% 88%, rgba(60, 80, 200, 0.28) 0px, transparent 55%);
+}
+
+.grid-lines {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade {
+  animation: fade 0.4s ease both;
 }

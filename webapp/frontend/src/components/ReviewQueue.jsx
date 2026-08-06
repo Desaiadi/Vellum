@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Inbox } from "lucide-react";
 import ConfidenceBadge, { ReviewFlag } from "./ConfidenceBadge";
 import ExtractionResult from "./ExtractionResult";
 
@@ -20,8 +21,15 @@ export default function ReviewQueue({ results, showDeid }) {
 
   if (results.length === 0) {
     return (
-      <div className="rounded-2xl bg-white p-8 text-center text-sm text-gray-400 shadow-sm ring-1 ring-black/5">
-        Upload a batch of documents to build a review queue.
+      <div className="flex flex-col items-center rounded-2xl bg-white px-8 py-16 text-center shadow-sm ring-1 ring-black/5">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-navy/5 text-navy/40">
+          <Inbox size={26} />
+        </div>
+        <p className="mt-4 font-display text-lg font-bold text-navy">Nothing queued yet</p>
+        <p className="mt-1.5 max-w-sm text-sm text-gray-500">
+          Upload a batch of documents on the left and they'll appear here as a
+          worklist — flagged records first, with confidence on each.
+        </p>
       </div>
     );
   }

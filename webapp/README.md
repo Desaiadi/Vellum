@@ -4,6 +4,20 @@ The flagship version of Vellum: a Flask API backend and a React (Vite +
 Tailwind) frontend, built on top of the same extraction logic as the
 original Streamlit POC (`poc/`, kept as a lightweight fallback).
 
+## The four workspaces
+
+| Tab | What it does |
+|---|---|
+| **Extract** | Superbill / discharge summary → structured record with ICD-10 + CPT codes, per-field confidence, and needs-review flags. |
+| **Batch** | The same over a stack of documents, as a review queue with aggregate analytics. |
+| **Policy** | Content management for billing policies, clinical guidelines, and payer–provider contracts: summarize, diff two versions, or convert written policy into runnable rules / Python / SQL / model features. |
+| **My Record** | Patient-facing. A lab report or medical record explained in plain language — each result, what could explain it, what to ask a clinician — with a grounded follow-up chat. |
+
+> **On "My Record":** it is an educational explainer, not a diagnosis, and the
+> prompts enforce that — it never tells a user what they have or what to take,
+> frames possibilities as things a clinician would consider, and raises the
+> urgency level rather than reassuring when a document looks time-sensitive.
+
 ## What's new here vs. `poc/`
 
 - Real web UI (React + Tailwind) instead of Streamlit.
@@ -71,6 +85,15 @@ in the sidebar.
 | `/api/report/summary` | GET | cached plain-English report summary |
 | `/api/report/explain` | POST | `{text}` → plain-English explanation of that snippet |
 | `/api/chat` | POST | `{message, history}` → grounded chat reply |
+| `/api/content/summarize` | POST | `file` or `text` + `doc_type` → summary, key points, obligations, codes, open questions |
+| `/api/content/compare` | POST | `file_a`/`text_a` + `file_b`/`text_b` → semantic diff with impact and materiality |
+| `/api/content/to-rules` | POST | `file` or `text` + `target` → rules, generated code, required inputs, caveats |
+| `/api/record/explain` | POST | `file` or `text` → plain-language explanation, findings, possibilities, questions, urgency |
+| `/api/record/consult` | POST | `{question, record_text, history}` → grounded follow-up answer |
+
+All document endpoints accept **either** an uploaded file (PDF, image, or
+plain text) **or** pasted text. PDFs use their embedded text layer when they
+have one and fall back to OCR for scanned pages.
 
 ## Notes
 

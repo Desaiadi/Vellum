@@ -56,6 +56,55 @@ export async function explainSnippet(text) {
   return data.explanation;
 }
 
+function docForm({ file, text }, fileField = "file", textField = "text") {
+  const form = new FormData();
+  if (file) form.append(fileField, file);
+  else form.append(textField, text || "");
+  return form;
+}
+
+export async function summarizeContent({ file, text, docType }) {
+  const form = docForm({ file, text });
+  form.append("doc_type", docType);
+  const res = await fetch(`${BASE}/content/summarize`, { method: "POST", body: form });
+  return handle(res);
+}
+
+export async function compareContent({ fileA, textA, fileB, textB }) {
+  const form = new FormData();
+  if (fileA) form.append("file_a", fileA);
+  else form.append("text_a", textA || "");
+  if (fileB) form.append("file_b", fileB);
+  else form.append("text_b", textB || "");
+  const res = await fetch(`${BASE}/content/compare`, { method: "POST", body: form });
+  return handle(res);
+}
+
+export async function contentToRules({ file, text, target }) {
+  const form = docForm({ file, text });
+  form.append("target", target);
+  const res = await fetch(`${BASE}/content/to-rules`, { method: "POST", body: form });
+  return handle(res);
+}
+
+export async function explainRecord({ file, text }) {
+  const res = await fetch(`${BASE}/record/explain`, {
+    method: "POST",
+    body: docForm({ file, text }),
+  });
+  return handle(res);
+}
+
+export async function consultRecord({ question, recordText, history }) {
+  const res = await fetch(`${BASE}/record/consult`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question, record_text: recordText, history }),
+  });
+  const data = await handle(res);
+  return data.reply;
+}
+
 export async function sendChat(message, history) {
   const res = await fetch(`${BASE}/chat`, {
     method: "POST",

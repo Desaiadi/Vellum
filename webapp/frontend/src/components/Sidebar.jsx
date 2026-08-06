@@ -15,7 +15,7 @@ export default function Sidebar({
   setDeid,
 }) {
   return (
-    <aside className="w-full shrink-0 space-y-6 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 lg:w-72">
+    <aside className="w-full shrink-0 self-start space-y-6 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 lg:sticky lg:top-24 lg:w-72">
       <div>
         <h2 className="mb-3 flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-navy">
           <SlidersHorizontal size={14} />
