@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
+  BookOpen,
   FileScan,
   Home,
   Layers,
   Loader2,
-  MessageSquareText,
   ScrollText,
   Sparkles,
   Stethoscope,
@@ -12,13 +12,13 @@ import {
 import Landing from "./components/Landing";
 import PolicyWorkspace from "./components/PolicyWorkspace";
 import RecordExplainer from "./components/RecordExplainer";
+import About from "./components/About";
 import Sidebar from "./components/Sidebar";
 import DocumentPicker from "./components/DocumentPicker";
 import ExtractionResult from "./components/ExtractionResult";
 import BatchUploader from "./components/BatchUploader";
 import ReviewQueue from "./components/ReviewQueue";
 import AnalyticsDashboard from "./components/AnalyticsDashboard";
-import ReportSummaryBox from "./components/ReportSummaryBox";
 import ChatWidget from "./components/ChatWidget";
 import { listSamples, extract, extractBatch } from "./api";
 
@@ -28,7 +28,7 @@ const TABS = [
   { id: "batch", label: "Batch", icon: Layers },
   { id: "policy", label: "Policy", icon: ScrollText },
   { id: "record", label: "My Record", icon: Stethoscope },
-  { id: "report", label: "Findings", icon: MessageSquareText },
+  { id: "about", label: "About", icon: BookOpen },
 ];
 
 function PageHeader({ eyebrow, title, subtitle }) {
@@ -168,7 +168,7 @@ export default function App() {
 
       <div className="flex-1">
         {tab === "home" && (
-          <Landing onStart={() => go("extract")} onOpenReport={() => go("report")} />
+          <Landing onStart={() => go("extract")} onOpenReport={() => go("about")} />
         )}
 
         {tab === "extract" && (
@@ -277,11 +277,7 @@ export default function App() {
           </main>
         )}
 
-        {tab === "report" && (
-          <main className="animate-fade mx-auto max-w-6xl px-6 py-10">
-            <ReportSummaryBox />
-          </main>
-        )}
+        {tab === "about" && <About />}
       </div>
 
       <ChatWidget />

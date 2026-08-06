@@ -22,7 +22,7 @@ The app also includes:
 - Two inference backends: Claude API (cloud) and a fully local/offline Ollama model — tested against each other, honestly, including where the local model underperforms.
 - Batch upload with a review queue and aggregate analytics (needs-review rate, confidence distribution) across processed documents.
 - A structured-output de-identification toggle for downstream/analytics use of the extracted record.
-- This chatbot, and a plain-English summary of the accompanying written report.
+- This chatbot, and an "About" page with a technical deep-dive: interactive architecture diagram, per-pipeline flows, the stack, the full API surface, design tradeoffs, the written report's findings in plain English, and a stated list of limitations.
 
 ## Content management (the "Policy" tab)
 

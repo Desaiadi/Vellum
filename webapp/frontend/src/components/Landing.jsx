@@ -188,7 +188,7 @@ export default function Landing({ onStart, onOpenReport }) {
                   onClick={onOpenReport}
                   className="rounded-xl border border-white/20 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
-                  Read the findings
+                  How it's built
                 </button>
               </div>
 

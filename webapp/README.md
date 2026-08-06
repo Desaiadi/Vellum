@@ -12,6 +12,7 @@ original Streamlit POC (`poc/`, kept as a lightweight fallback).
 | **Batch** | The same over a stack of documents, as a review queue with aggregate analytics. |
 | **Policy** | Content management for billing policies, clinical guidelines, and payer–provider contracts: summarize, diff two versions, or convert written policy into runnable rules / Python / SQL / model features. |
 | **My Record** | Patient-facing. A lab report or medical record explained in plain language — each result, what could explain it, what to ask a clinician — with a grounded follow-up chat. |
+| **About** | Technical deep-dive: interactive architecture diagram, per-pipeline flows, stack, full API surface, design tradeoffs, the report's findings in plain English, and a stated list of limitations. |
 
 > **On "My Record":** it is an educational explainer, not a diagnosis, and the
 > prompts enforce that — it never tells a user what they have or what to take,
