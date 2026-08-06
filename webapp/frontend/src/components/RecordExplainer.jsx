@@ -10,6 +10,7 @@ import {
   Stethoscope,
 } from "lucide-react";
 import DocInput from "./DocInput";
+import Markdown from "./Markdown";
 import { explainRecord, consultRecord } from "../api";
 
 const STATUS_STYLE = {
@@ -103,17 +104,24 @@ function ConsultPanel({ recordText }) {
         Follow-up questions, answered from your document.
       </p>
 
-      <div ref={scrollRef} className="max-h-80 space-y-3 overflow-y-auto pr-1">
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-              m.role === "user" ? "ml-auto bg-navy text-white" : "bg-gray-100 text-gray-800"
-            }`}
-          >
-            {m.content}
-          </div>
-        ))}
+      <div ref={scrollRef} className="max-h-[26rem] space-y-3 overflow-y-auto pr-1">
+        {messages.map((m, i) =>
+          m.role === "user" ? (
+            <div
+              key={i}
+              className="ml-auto max-w-[88%] rounded-2xl bg-navy px-3.5 py-2.5 text-sm leading-relaxed text-white"
+            >
+              {m.content}
+            </div>
+          ) : (
+            <div
+              key={i}
+              className="max-w-[92%] rounded-2xl bg-gray-100 px-4 py-3 text-gray-800"
+            >
+              <Markdown>{m.content}</Markdown>
+            </div>
+          ),
+        )}
         {sending && (
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
             <Loader2 size={12} className="animate-spin" /> Thinking…

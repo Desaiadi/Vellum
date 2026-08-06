@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Loader2, MessageCircle, Send, Sparkles, X } from "lucide-react";
+import Markdown from "./Markdown";
 import { sendChat } from "../api";
 
 const SUGGESTIONS = [
@@ -58,18 +59,23 @@ export default function ChatWidget() {
             </button>
           </div>
           <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto p-4">
-            {messages.map((m, i) => (
-              <div
-                key={i}
-                className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${
-                  m.role === "user"
-                    ? "ml-auto bg-navy text-white"
-                    : "bg-gray-100 text-gray-800"
-                }`}
-              >
-                {m.content}
-              </div>
-            ))}
+            {messages.map((m, i) =>
+              m.role === "user" ? (
+                <div
+                  key={i}
+                  className="ml-auto max-w-[85%] rounded-2xl bg-navy px-3 py-2 text-sm text-white"
+                >
+                  {m.content}
+                </div>
+              ) : (
+                <div
+                  key={i}
+                  className="max-w-[92%] rounded-2xl bg-gray-100 px-3.5 py-2.5 text-gray-800"
+                >
+                  <Markdown>{m.content}</Markdown>
+                </div>
+              ),
+            )}
             {sending && (
               <div className="flex items-center gap-1.5 text-xs text-gray-400">
                 <Loader2 size={12} className="animate-spin" /> Thinking…

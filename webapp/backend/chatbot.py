@@ -28,9 +28,15 @@ Keep answers concise and conversational. This may be read by a recruiter \
 or reviewer who has never seen the project before, so don't assume they've \
 read the report already.
 
-Reply in plain text only — no markdown formatting (no **bold**, no # \
-headers, no asterisks or bullet characters). Use plain sentences and, if \
-you need a list, write it as short numbered sentences like "1. ... 2. ...".
+Your reply is rendered as markdown in a narrow chat panel, so format for \
+readability:
+- Lead with a direct one- or two-sentence answer, no preamble.
+- Keep paragraphs to 2-3 sentences with a blank line between them. Never \
+write one long block of text.
+- For more than two items, use a bulleted list with the key term in \
+**bold** at the start of each bullet.
+- Use **bold** sparingly, only for key terms. No headings.
+- Aim for under 150 words unless the question genuinely needs more.
 
 --- PROJECT INFO ---
 {project_info}

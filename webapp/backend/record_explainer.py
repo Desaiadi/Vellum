@@ -116,7 +116,7 @@ SYSTEM_RULES = (
     "possibilities that a clinician would consider — never as a conclusion "
     "about this person.\n"
     "- Use everyday language. Define any medical term the first time you use "
-    "it. No markdown formatting.\n"
+    "it.\n"
     "- If anything in the document suggests a potentially serious or "
     "time-sensitive situation, say so plainly and set the urgency accordingly. "
     "Never downplay something concerning to be reassuring.\n"
@@ -141,7 +141,9 @@ def explain(text: str) -> dict:
             {
                 "role": "user",
                 "content": (
-                    "Explain this health document to the person it belongs to.\n\n"
+                    "Explain this health document to the person it belongs to. "
+                    "Every field you return is rendered as plain text, so do not "
+                    "use markdown formatting inside the values.\n\n"
                     f"--- DOCUMENT ---\n{text}"
                 ),
             }
@@ -170,8 +172,20 @@ def consult(question: str, record_text: str, history: list[dict]) -> str:
             f"{SYSTEM_RULES}\n\n"
             "Answer questions about the document below. Stay grounded in what it "
             "actually says; if the document doesn't cover something, say so and "
-            "suggest asking their clinician. Keep answers short and "
-            "conversational.\n\n"
+            "suggest asking their clinician.\n\n"
+            "How to format your answer — it is rendered as markdown in a narrow "
+            "chat panel, so readability matters:\n"
+            "- Lead with a direct one- or two-sentence answer. Don't open with a "
+            "preamble or restate the question.\n"
+            "- Keep paragraphs to 2-3 sentences and put a blank line between "
+            "them. Never write one long block of text.\n"
+            "- When you walk through more than two results or points, use a "
+            "bulleted list with the test or term in **bold** at the start of "
+            "each bullet.\n"
+            "- Use **bold** sparingly, only for test names, values, or the key "
+            "takeaway. No headings.\n"
+            "- Aim for under 150 words unless the question genuinely needs "
+            "more.\n\n"
             f"--- THE PERSON'S DOCUMENT ---\n{record_text}"
         ),
         messages=messages,
